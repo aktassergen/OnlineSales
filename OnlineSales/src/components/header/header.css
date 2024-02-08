@@ -1,0 +1,38 @@
+.header {
+    background-color: #e26f6f;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center; /* Navbar'ı dikeyde ortalamak için */
+    padding: 20px;
+  }
+  
+  .logo {
+    color: black; /* Logo yazısını siyah yap */
+    font-size: 24px; /* Logo yazı puntunu büyüt */
+    font-weight: bold; 
+  }
+  
+  .navbar ul {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .header nav ul {
+    list-style: none;
+    display: flex; /* Navbar'ı yatayda hizalamak için */
+    font-size: 24px;
+    font-weight: bold;
+    justify-content: flex-start; /* Navbar'ı sola yasla */
+    gap: 10px;
+  }
+  
+  .header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .cart {
+    font-size: 24px; /* Sepet yazı puntunu büyüt */
+    font-weight: bold; /* Sepet yazısını kalın yap */
+  }

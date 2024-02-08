@@ -1,0 +1,38 @@
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .product-list .product-card {
+    border-radius: 5px;
+    margin: 10px;
+    width: 300px;
+
+    overflow: hidden;
+    display: flex; /* Kart içeriğini dikey hizaya getirmek için */
+    flex-direction: column; /* Kart içeriğini dikey hizaya getirmek için */
+    align-items: center; /* Kart içeriğini ortalamak için */
+  }
+  
+  .product-list .product-card img {
+  width: 100%; /* Resimlerin genişliğini kartın genişliği kadar (%100) yap */
+  height: 220px; /* Resimlerin yüksekliğini otomatik olarak ayarla */
+  border-radius: 5px; /* Resimlerin köşe yarıçapını ayarla */
+  }
+  
+  .product-list .product-card .product-info {
+    padding: 10px;
+  }
+  
+  .product-list .product-card .product-info h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  
+  .product-list .product-card .product-info p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  

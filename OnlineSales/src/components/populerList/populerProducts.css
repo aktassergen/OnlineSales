@@ -1,0 +1,51 @@
+/* popularProduct.css */
+.popular-products {
+  margin-top: 50px; /* Öne çıkan ürünlerden biraz boşluk bırakmak için */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.popular-products h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-list .product-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  width: 300px;
+  overflow: hidden;
+  display: flex; /* Kart içeriğini dikey hizaya getirmek için */
+  flex-direction: column; /* Kart içeriğini dikey hizaya getirmek için */
+  align-items: center; 
+}
+
+.product-list .product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px 5px 0 0;
+}
+
+.product-list .product-card .product-info {
+  padding: 10px;
+}
+
+.product-list .product-card .product-info h2 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.product-list .product-card .product-info p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}

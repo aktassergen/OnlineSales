@@ -1,0 +1,82 @@
+.home .product-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 300px; /* Kartların genişliğini 300px olarak ayarla */
+  height: 400px;
+  display: flex; /* Kart içeriğini dikey hizaya getirmek için */
+  flex-direction: column; /* Kart içeriğini dikey hizaya getirmek için */
+  align-items: center; 
+}
+
+.home .product-card img {
+  width: 100%; /* Resimlerin genişliğini kartın genişliği kadar (%100) yap */
+  height: 220px; /* Resimlerin yüksekliğini otomatik olarak ayarla */
+  border-radius: 5px; /* Resimlerin köşe yarıçapını ayarla */
+}
+
+
+.home .product-card .product-info h2 {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.home .product-card .product-info p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.home {
+  text-align: center;
+}
+
+.featured-products {
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin: auto;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.next-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.prev-button {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.next-button,
+.prev-button {
+  transition: transform 5s linear;
+}
+
+.next-button:hover,
+.prev-button:hover {
+  transition: none;
+}
