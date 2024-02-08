@@ -7,8 +7,8 @@ const Header = () => {
     <header className="header">
       <nav className="navbar">
         <ul>
-        <li><a href="#">Anasayfa</a></li>
-          <li><a href="#">Ürünler</a></li>
+        <li><Link to="/">Anasayfa</Link></li>
+          <li><Link to="/products">Ürünler</Link></li>
         </ul>
       </nav>
       <div className="cart">Sepet</div> {/* Sepet bilgisi */}

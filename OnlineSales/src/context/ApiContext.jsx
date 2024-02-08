@@ -1,49 +1,52 @@
 // ApiContext.jsx
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { createContext, useContext, useState } from 'react';
 
+// API'nin başlangıç durumu
+const initialApiState = {
+  shoppingBasket: [],
+  recipes: [], // recipes state'ini ekledik
+};
+
+// Context oluşturma
 const ApiContext = createContext();
 
+// API sağlayıcısı bileşeni
 export const ApiProvider = ({ children }) => {
-  const [shoppingBasket, setShoppingBasket] = useState([]);
+  const [apiState, setApiState] = useState(initialApiState);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/shoppingBasket');
-      setShoppingBasket(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  // Sepete ürün ekleme fonksiyonu
+  const addToBasket = (product) => {
+    setApiState((prevState) => ({
+      ...prevState,
+      shoppingBasket: [...prevState.shoppingBasket, product],
+    }));
   };
 
-  const addToBasket = async (product) => {
-    try {
-      const response = await axios.post('http://localhost:3001/shoppingBasket', product);
-      setShoppingBasket([...shoppingBasket, response.data]);
-    } catch (error) {
-      console.error('Error adding to basket:', error);
-    }
+  // Sepetten ürün çıkarma fonksiyonu
+  const removeFromBasket = (productId) => {
+    setApiState((prevState) => ({
+      ...prevState,
+      shoppingBasket: prevState.shoppingBasket.filter(
+        (product) => product.id !== productId
+      ),
+    }));
   };
 
-  const removeFromBasket = async (productId) => {
-    try {
-      await axios.delete(`http://localhost:3001/shoppingBasket/${productId}`);
-      setShoppingBasket(shoppingBasket.filter((item) => item.id !== productId));
-    } catch (error) {
-      console.error('Error removing from basket:', error);
-    }
+  // recipes state'ini güncelleme fonksiyonu
+  const setRecipes = (newRecipes) => {
+    setApiState((prevState) => ({
+      ...prevState,
+      recipes: newRecipes,
+    }));
   };
 
   return (
-    <ApiContext.Provider value={{ shoppingBasket, addToBasket, removeFromBasket }}>
+    <ApiContext.Provider value={{ apiState, addToBasket, removeFromBasket, setRecipes }}>
       {children}
     </ApiContext.Provider>
   );
 };
 
+// Özel bir hook oluşturma
 export const useApi = () => useContext(ApiContext);
