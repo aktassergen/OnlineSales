@@ -8,9 +8,9 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [targetIds] = useState([1, 2, 5, 7, 9]);
   const [hovered, setHovered] = useState(false);
-  const [cartProducts, setCartProducts] = useState([]); // Sepetteki ürünleri tutar
-  const [popularProducts, setPopularProducts] = useState([]); // Popüler ürünleri tutar
-  const [cartQuantities, setCartQuantities] = useState({}); // Sepetteki ürün miktarlarını tutar
+  const [cartProducts, setCartProducts] = useState([]); 
+  const [popularProducts, setPopularProducts] = useState([]); 
+  const [timer, setTimer] = useState(5); // Timer için state ekle
 
   useEffect(() => {
     const apiUrl = "https://dummyjson.com/products";
@@ -23,13 +23,10 @@ const Home = () => {
         setPopularProducts(filteredProducts);
 
         const savedCart = localStorage.getItem('cart');
-        const cartItems = savedCart ? JSON.parse(savedCart) : [];
-        setCartProducts(cartItems); // Sepetteki ürünleri ayarla
-        const quantities = {};
-        cartItems.forEach(item => {
-          quantities[item.id] = item.quantity;
-        });
-        setCartQuantities(quantities); // Sepetteki ürün miktarlarını ayarla
+        if(savedCart){
+          setCartProducts(JSON.parse(savedCart));
+        }
+      
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,44 +39,61 @@ const Home = () => {
     let interval;
     if (!hovered) {
       interval = setInterval(() => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % targetIds.length);
-      }, 5000);
+        setTimer(prevTimer => {
+          if (prevTimer > 0) {
+            return prevTimer - 1;
+          } else {
+            setCurrentIndex(prevIndex => (prevIndex + 1) % targetIds.length); // Timer bittiğinde diğer slayta geç
+            return 5; // Timer'ı yeniden başlat
+          }
+        });
+      }, 1000); // 1000ms = 1 saniye
     }
     return () => clearInterval(interval);
   }, [hovered, targetIds]);
 
   const handleNextProduct = () => {
     setCurrentIndex(prevIndex => (prevIndex + 1) % targetIds.length);
+    setTimer(5); // Yeni slayta geçtiğinde timer'ı sıfırla
   };
 
   const handlePrevProduct = () => {
     setCurrentIndex(prevIndex => (prevIndex - 1 + targetIds.length) % targetIds.length);
+    setTimer(5); // Yeni slayta geçtiğinde timer'ı sıfırla
   };
 
   const selectedProduct = featuredProducts.find(product => product.id === targetIds[currentIndex]);
 
   const addToCart = (product) => {
-    const updatedCart = [...cartProducts];
-    const existingProductIndex = updatedCart.findIndex(item => item.id === product.id);
-    if (existingProductIndex !== -1) {
-      updatedCart[existingProductIndex].quantity += 1; // Eğer ürün zaten sepette ise sadece miktarını artır
-    } else {
-      updatedCart.push({ ...product, quantity: 1 }); // Eğer sepette yoksa yeni ürünü ekle
-    }
-    const updatedQuantities = { ...cartQuantities };
-    updatedQuantities[product.id] = (updatedQuantities[product.id] || 0) + 1;
-    setCartQuantities(updatedQuantities);
+    const updatedCart = [...cartProducts, product];
     setCartProducts(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
 
+    const updatedPopularProducts = popularProducts.map(p => {
+      if (p.id === product.id) {
+        return { ...p, quantityInCart: (p.quantityInCart || 0) + 1 }; 
+      }
+      return p;
+    });
+    setPopularProducts(updatedPopularProducts);
+  };
+  
   const removeFromCart = (productId) => {
-    const updatedCart = cartProducts.filter(product => product.id !== productId);
-    const updatedQuantities = { ...cartQuantities };
-    delete updatedQuantities[productId];
-    setCartQuantities(updatedQuantities);
-    setCartProducts(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    const indexOfProduct = cartProducts.findIndex(item => item.id === productId);
+    if (indexOfProduct !== -1) {
+      const updatedCart = [...cartProducts];
+      updatedCart.splice(indexOfProduct, 1);
+      setCartProducts(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+      const updatedPopularProducts = popularProducts.map(p => {
+        if (p.id === productId) {
+          return { ...p, quantityInCart: (p.quantityInCart || 1) - 1 }; 
+        }
+        return p;
+      });
+      setPopularProducts(updatedPopularProducts);
+    }
   };
 
   return (
@@ -97,11 +111,12 @@ const Home = () => {
                 description={selectedProduct.description}
                 price={selectedProduct.price}
                 rating={selectedProduct.rating}
-                addToCart={() => addToCart(selectedProduct)} // Popüler ürünü sepete ekle
-                removeFromCart={() => removeFromCart(selectedProduct.id)} // Ürünü sepette kaldır
-                quantity={cartQuantities[selectedProduct.id] || 0} // Ürünün sepetteki miktarını göster
+                addToCart={() => addToCart(selectedProduct)} 
+                removeFromCart={() => removeFromCart(selectedProduct.id)} 
+                quantityInCart={cartProducts.filter(item => item.id === selectedProduct.id).length} 
               />
             )}
+            {hovered ? null : <div className="timer">{timer}</div>} {/* Timer sadece fare üzerinde değilken görünecek */}
           </div>
           <button className="next-button" onClick={handleNextProduct}>{'>'}</button>
         </div>
@@ -117,9 +132,9 @@ const Home = () => {
               description={product.description}
               price={product.price}
               rating={product.rating}
-              addToCart={() => addToCart(product)} // Popüler ürünü sepete ekle
-              removeFromCart={() => removeFromCart(product.id)} // Ürünü sepette kaldır
-              quantity={cartQuantities[product.id] || 0} // Ürünün sepetteki miktarını göster
+              addToCart={() => addToCart(product)} 
+              removeFromCart={() => removeFromCart(product.id)} 
+              quantityInCart={cartProducts.filter(item => item.id === product.id).length} 
             />
           ))}
         </div>

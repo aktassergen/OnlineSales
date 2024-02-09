@@ -1,0 +1,16 @@
+.shopping-basket-popup {
+    position: absolute;
+    top: 100%; /* Navbarın altında olacak şekilde ayarlayın */
+    right: 0;
+    width: 25%; /* Sayfanın %25'ini kaplayacak şekilde ayarlayın */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: none;
+  }
+  
+  .shopping-basket-popup.open {
+    display: block; /* Sepet açık olduğunda göster */
+  }

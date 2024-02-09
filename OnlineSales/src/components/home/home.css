@@ -16,7 +16,11 @@
   border-radius: 5px; /* Resimlerin köşe yarıçapını ayarla */
 }
 
-
+.home .featured-products {
+  max-width: calc(100% - 20px); /* Navbar'ın genişliği ile aynı olacak şekilde ayarla */
+  margin: 0 auto; /* Merkezlemek için */
+  background-color: #81b8ac;
+}
 .home .product-card .product-info h2 {
   font-size: 20px;
   margin-top: 10px;

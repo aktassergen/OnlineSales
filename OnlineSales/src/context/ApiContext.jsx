@@ -9,7 +9,7 @@ const initialApiState = {
 };
 
 // Context oluşturma
-const ApiContext = createContext();
+export const CartContext = createContext(); // CartContext'i doğru şekilde dışa aktarıyoruz
 
 // API sağlayıcısı bileşeni
 export const ApiProvider = ({ children }) => {
@@ -42,11 +42,11 @@ export const ApiProvider = ({ children }) => {
   };
 
   return (
-    <ApiContext.Provider value={{ apiState, addToBasket, removeFromBasket, setRecipes }}>
+    <CartContext.Provider value={{ apiState, addToBasket, removeFromBasket, setRecipes }}>
       {children}
-    </ApiContext.Provider>
+    </CartContext.Provider>
   );
 };
 
 // Özel bir hook oluşturma
-export const useApi = () => useContext(ApiContext);
+export const useApi = () => useContext(CartContext);

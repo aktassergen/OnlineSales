@@ -36,3 +36,57 @@
     font-size: 24px; /* Sepet yazı puntunu büyüt */
     font-weight: bold; /* Sepet yazısını kalın yap */
   }
+
+  .navbar {
+    ul {
+      display: flex;
+      list-style-type: none;
+      padding: 0;
+      
+      li {
+        margin-right: 20px;
+        
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+    }
+  }
+  
+  .cart-dropdown {
+    position: fixed; /* Sabit konumlandırma */
+    top: 0;
+    right: 0;
+    width: 25%; /* Ekranın sağ tarafının dörtte biri kadar genişlik */
+    height: 100vh; /* Ekranın tamamını kaplayacak şekilde */
+    background-color: white;
+    z-index: 1000; /* Diğer içeriklerin üzerinde olmasını sağlamak için */
+    transition: transform 0.3s ease; /* Kaydırma efekti için geçiş efekti */
+    transform: translateX(100%); /* Başlangıçta ekranın dışına kayacak şekilde */
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1); /* Gölgelendirme efekti */
+    padding: 20px; /* İçeriğin kenarlardan uzaklığı */
+    overflow-y: auto; /* İçerik fazla olursa kaydırma çubuğu ekle */
+  }
+  
+  /* Dropdown container active state */
+  .cart-dropdown.active {
+    transform: translateX(0); /* Aktif durumda ekrana kayacak şekilde */
+  }
+  
+  /* Sepet overlay */
+  .cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam siyah bir arka plan */
+    z-index: 999; /* Dropdown'dan bir düşük z-index değeri */
+    display: none; /* Başlangıçta gizli */
+  }
+  
+  /* Sepet overlay aktif durumda */
+  .cart-overlay.active {
+    display: block; /* Aktif durumda görünür */
+  }
