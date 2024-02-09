@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+// ProductCard.jsx
+
+import React, { useState, useEffect } from 'react';
 import './ProductCard.css';
 
-const ProductCard = ({ thumbnail, title, description, price, rating }) => {
-  const [quantity, setQuantity] = useState(0);
+const ProductCard = ({ thumbnail, title, description, price, rating, addToCart, removeFromCart }) => {
+  const [quantityInCart, setQuantityInCart] = useState(0);
 
-  const addToCart = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
-    // Sepete ürünü ekleyen fonksiyon buraya gelecek
+  useEffect(() => {
+    // Her bileşen yenilendiğinde LocalStorage'dan miktarı al
+    const savedQuantity = localStorage.getItem(title);
+    if (savedQuantity) {
+      setQuantityInCart(parseInt(savedQuantity));
+    }
+  }, [title]); // Başlık değiştiğinde çalışacak
+
+  const handleAddToCart = () => {
+    const newQuantity = quantityInCart + 1;
+    setQuantityInCart(newQuantity);
+    addToCart({ thumbnail, title, description, price, rating }); // addToCart fonksiyonunu doğru şekilde çağır
+    // LocalStorage'a miktarı kaydet
+    localStorage.setItem(title, newQuantity.toString());
   };
 
-  const removeFromCart = () => {
-    setQuantity(prevQuantity => prevQuantity > 0 ? prevQuantity - 1 : 0);
-    // Sepetten ürünü çıkaran fonksiyon buraya gelecek
+  const handleRemoveFromCart = () => {
+    const newQuantity = Math.max(quantityInCart - 1, 0);
+    setQuantityInCart(newQuantity);
+    removeFromCart({ title });
+    // LocalStorage'a miktarı kaydet
+    localStorage.setItem(title, newQuantity.toString());
   };
 
   return (
@@ -22,14 +38,14 @@ const ProductCard = ({ thumbnail, title, description, price, rating }) => {
         <p>{description}</p>
         <p>Fiyat: {price}</p> 
         <p>Puan: {rating}</p> 
-        {quantity > 0 ? (
+        {quantityInCart > 0 ? (
           <div className="quantity-buttons">
-            <button onClick={removeFromCart}>-</button>
-            <span>{quantity}</span>
-            <button onClick={addToCart}>+</button>
+            <button onClick={handleRemoveFromCart}>-</button>
+            <span>{quantityInCart}</span>
+            <button onClick={handleAddToCart}>+</button>
           </div>
         ) : (
-          <button onClick={addToCart}>+</button>
+          <button onClick={handleAddToCart}>Sepete Ekle</button>
         )}
       </div>
     </div>

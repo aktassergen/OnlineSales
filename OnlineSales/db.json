@@ -1,1 +1,28 @@
-{}
+{
+    "products": [
+      {
+        "id": 1,
+        "title": "Ürün 1",
+        "description": "Bu ürün 1 açıklamasıdır.",
+        "price": 10.99,
+        "thumbnail": "https://example.com/product1.jpg",
+        "rating": 4.5
+      },
+      {
+        "id": 2,
+        "title": "Ürün 2",
+        "description": "Bu ürün 2 açıklamasıdır.",
+        "price": 19.99,
+        "thumbnail": "https://example.com/product2.jpg",
+        "rating": 3.8
+      },
+      {
+        "id": 3,
+        "title": "Ürün 3",
+        "description": "Bu ürün 3 açıklamasıdır.",
+        "price": 14.99,
+        "thumbnail": "https://example.com/product3.jpg",
+        "rating": 4.2
+      }
+    ]
+  }

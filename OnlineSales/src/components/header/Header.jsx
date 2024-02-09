@@ -11,7 +11,7 @@ const Header = () => {
           <li><Link to="/products">Ürünler</Link></li>
         </ul>
       </nav>
-      <div className="cart">Sepet</div> {/* Sepet bilgisi */}
+      <Link to="/basket" className="cart">Sepet</Link> 
     </header>
   );
 };
